@@ -2,9 +2,7 @@ package com.arihant.expense_tracker.entity;
 
 import com.arihant.expense_tracker.enums.TransactionType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +14,8 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   @NotBlank(message = "Title name must be provided")
+    @NotBlank(message = "Title name must be provided")
+    @Size(max = 60)
     private String title;
 
     // Will only accept these listed values. Requires validation handling in controller
@@ -24,15 +23,20 @@ public class Expense {
     private String category;
 
     // It will also only accept the values defined in enum. Also requires validation handling in controller
+    @NotNull
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
+    @NotNull
     @Positive(message = "Amount must be greater than 0")
     private Double amount;
 
     private LocalDate expenseDate;
 
     private LocalDateTime entryDateTime;
+
+    @Size(max = 500)
+    private String remark;
 
     /* A no-args constructor is required by the JPA and Hibernate because it doesn't know which fields are to be passed,
      So it initially creates an empty object.
@@ -105,5 +109,13 @@ public class Expense {
     @PrePersist
     public void setEntryDateTime() {
         this.entryDateTime = LocalDateTime.now();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
