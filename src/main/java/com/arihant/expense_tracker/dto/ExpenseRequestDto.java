@@ -13,6 +13,7 @@ public class ExpenseRequestDto {
     private TransactionType type;
     private Double amount;
     private LocalDate expenseDate;
+    private String remarks;
     // private LocalDateTime entryDateTime;
 
     public ExpenseRequestDto() {
@@ -64,6 +65,14 @@ public class ExpenseRequestDto {
 
     public void setExpenseDate(LocalDate expenseDate) {
         this.expenseDate = expenseDate;
+    }
+
+    public String getRemark() {
+        return remarks;
+    }
+
+    public void setRemark(String remarks) {
+        this.remarks = remarks;
     }
 
     /*

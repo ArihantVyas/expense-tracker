@@ -14,6 +14,7 @@ public class ExpenseResponseDto {
     private Double amount;
     private LocalDate expenseDate;
     private LocalDateTime entryDateTime;
+    private String remark;
 
     public ExpenseResponseDto() {
     }
@@ -72,5 +73,13 @@ public class ExpenseResponseDto {
 
     public void setEntryDateTime(LocalDateTime entryDateTime) {
         this.entryDateTime = entryDateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

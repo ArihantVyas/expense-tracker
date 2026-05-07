@@ -28,6 +28,7 @@ public class ExpenseService {
         expenseReq.setType(requestDto.getType());
         expenseReq.setAmount(requestDto.getAmount());
         expenseReq.setExpenseDate(requestDto.getExpenseDate());
+        expenseReq.setRemark(requestDto.getRemark());
 
         Expense expenseRes = repo.save(expenseReq);
 
@@ -56,6 +57,7 @@ public class ExpenseService {
             loopResDto.setAmount(expense.getAmount());
             loopResDto.setExpenseDate(expense.getExpenseDate());
             loopResDto.setEntryDateTime(expense.getEntryDateTime());
+            loopResDto.setRemark(expense.getRemark());
 
             resDtoList.add(loopResDto);
         }
