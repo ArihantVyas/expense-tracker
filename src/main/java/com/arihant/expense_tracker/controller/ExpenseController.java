@@ -1,16 +1,15 @@
 package com.arihant.expense_tracker.controller;
 
 import com.arihant.expense_tracker.dto.ExpenseRequestDto;
+import com.arihant.expense_tracker.dto.ExpenseResponseDto;
 import com.arihant.expense_tracker.entity.Expense;
 import com.arihant.expense_tracker.service.ExpenseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -24,5 +23,10 @@ public class ExpenseController {
         Expense exp = expenseService.saveNewEntry(expenseRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(exp);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ExpenseResponseDto>>  getAll(){
+        return new ResponseEntity<>(expenseService.getAll(),HttpStatus.OK);
     }
 }

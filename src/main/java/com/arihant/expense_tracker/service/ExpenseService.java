@@ -4,6 +4,7 @@ import com.arihant.expense_tracker.dto.ExpenseRequestDto;
 import com.arihant.expense_tracker.dto.ExpenseResponseDto;
 import com.arihant.expense_tracker.entity.Expense;
 import com.arihant.expense_tracker.repository.ExpenseRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ExpenseService {
         return expenseRes;
     }
 
-    public void getAll(ExpenseResponseDto responseDto){
+    public List<ExpenseResponseDto> getAll(){
 
         List<Expense> expenseResList = repo.findAll();
         List<ExpenseResponseDto> resDtoList = new ArrayList<>();
@@ -44,16 +45,22 @@ public class ExpenseService {
             // Convert Entity -> DTO.
             // No need to recreate Expense entity because JPA already returns populated entities.
 
-            Expense loopExpenseObject = new Expense();
+            // Expense loopExpenseObject = new Expense();
 
-            loopExpenseObject.setId(expense.getId());
-            loopExpenseObject.setTitle(expense.getTitle());
-            loopExpenseObject.setCategory(expense.getCategory());
-            loopExpenseObject.setType(expense.getType());
-            loopExpenseObject.setAmount(expense.getAmount());
-            loopExpenseObject.setExpenseDate(expense.getExpenseDate());
-            loopExpenseObject.setEntryDateTime(expense.getEntryDateTime());
+            ExpenseResponseDto loopResDto = new ExpenseResponseDto();
+
+            loopResDto.setId(expense.getId());
+            loopResDto.setTitle(expense.getTitle());
+            loopResDto.setCategory(expense.getCategory());
+            loopResDto.setType(expense.getType());
+            loopResDto.setAmount(expense.getAmount());
+            loopResDto.setExpenseDate(expense.getExpenseDate());
+            loopResDto.setEntryDateTime(expense.getEntryDateTime());
+
+            resDtoList.add(loopResDto);
         }
+
+        return resDtoList;
 
     }
 }
