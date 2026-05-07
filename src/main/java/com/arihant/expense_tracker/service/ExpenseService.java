@@ -33,12 +33,16 @@ public class ExpenseService {
         return expenseRes;
     }
 
-    public void readAll(ExpenseResponseDto responseDto){
+    public void getAll(ExpenseResponseDto responseDto){
 
         List<Expense> expenseResList = repo.findAll();
         List<ExpenseResponseDto> resDtoList = new ArrayList<>();
 
         for(Expense expense : expenseResList){
+
+            // WRONG LOGIC :-
+            // Convert Entity -> DTO.
+            // No need to recreate Expense entity because JPA already returns populated entities.
 
             Expense loopExpenseObject = new Expense();
 
