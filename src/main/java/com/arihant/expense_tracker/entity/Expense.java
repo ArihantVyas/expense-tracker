@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Entity
 public class Expense {
 
+    // Wrapper classes are used because they can have 'null' value . Primitive types can't.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
