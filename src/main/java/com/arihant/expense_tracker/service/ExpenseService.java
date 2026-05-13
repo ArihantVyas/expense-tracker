@@ -4,7 +4,6 @@ import com.arihant.expense_tracker.dto.ExpenseRequestDto;
 import com.arihant.expense_tracker.dto.ExpenseResponseDto;
 import com.arihant.expense_tracker.entity.Expense;
 import com.arihant.expense_tracker.repository.ExpenseRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class ExpenseService {
 
             ExpenseResponseDto loopResDto = new ExpenseResponseDto();
 
-            loopResDto.setId(expense.getId());
+            loopResDto.setId(expense.getExpId());
             loopResDto.setTitle(expense.getTitle());
             loopResDto.setCategory(expense.getCategory());
             loopResDto.setType(expense.getType());

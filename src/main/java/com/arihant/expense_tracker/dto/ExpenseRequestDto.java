@@ -6,19 +6,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ExpenseRequestDto {
 
-    private Long id;
+    private Long expId;
 
     @NotBlank(message = "Title name must be provided")
     @Size(max = 60)
     private String title;
 
+    // Will only accept these listed values. Requires validation handling in controller
     @Pattern(regexp = "Food|Travel|Shopping|Entertainment|Work|Rent|Gym|Bills|Subscriptions")
     private String category;
 
+    // It will also only accept the values defined in enum. Also requires validation handling in controller
     @NotNull
     @Enumerated(EnumType.STRING)
     private TransactionType type;
@@ -31,17 +32,18 @@ public class ExpenseRequestDto {
 
     @Size(max = 500)
     private String remarks;
+
     // private LocalDateTime entryDateTime;
 
     public ExpenseRequestDto() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getExpId() {
+        return expId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExpId(Long expId) {
+        this.expId = expId;
     }
 
     public String getTitle() {

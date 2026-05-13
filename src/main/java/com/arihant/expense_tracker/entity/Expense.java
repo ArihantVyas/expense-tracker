@@ -2,7 +2,6 @@ package com.arihant.expense_tracker.entity;
 
 import com.arihant.expense_tracker.enums.TransactionType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,30 +13,21 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long expId;
 
-    @NotBlank(message = "Title name must be provided")
-    @Size(max = 60)
     private String title;
 
-    // Will only accept these listed values. Requires validation handling in controller
-    @Pattern(regexp = "Food|Travel|Shopping|Entertainment|Work|Rent|Gym|Bills|Subscriptions")
     private String category;
 
-    // It will also only accept the values defined in enum. Also requires validation handling in controller
-    @NotNull
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    @NotNull
-    @Positive(message = "Amount must be greater than 0")
     private Double amount;
 
     private LocalDate expenseDate;
 
     private LocalDateTime entryDateTime;
 
-    @Size(max = 500)
     private String remark;
 
     /* A no-args constructor is required by the JPA and Hibernate because it doesn't know which fields are to be passed,
@@ -55,12 +45,12 @@ public class Expense {
         this.expenseDate = expenseDate;
     }
 
-    public Long getId() {
-        return id;
+    public Long getExpId() {
+        return expId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExpId(Long expId) {
+        this.expId = expId;
     }
 
     public String getTitle() {
