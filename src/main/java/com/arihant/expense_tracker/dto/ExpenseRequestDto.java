@@ -1,6 +1,9 @@
 package com.arihant.expense_tracker.dto;
 
 import com.arihant.expense_tracker.enums.TransactionType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,11 +11,25 @@ import java.time.LocalDateTime;
 public class ExpenseRequestDto {
 
     private Long id;
+
+    @NotBlank(message = "Title name must be provided")
+    @Size(max = 60)
     private String title;
+
+    @Pattern(regexp = "Food|Travel|Shopping|Entertainment|Work|Rent|Gym|Bills|Subscriptions")
     private String category;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
+
+    @NotNull
+    @Positive(message = "Amount must be greater than 0")
     private Double amount;
+
     private LocalDate expenseDate;
+
+    @Size(max = 500)
     private String remarks;
     // private LocalDateTime entryDateTime;
 

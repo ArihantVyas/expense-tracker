@@ -16,7 +16,13 @@ public class GlobalExceptionHandler {
 
         ErrorResponse_MethodArgumentNotValidException errorResponse = new ErrorResponse_MethodArgumentNotValidException();
 
-        errorResponse.message = exception.getMessage();
+        // errorResponse.message = exception.getMessage();
+
+        errorResponse.message =
+                exception
+                        .getBindingResult()
+                        .getFieldError()
+                        .getDefaultMessage();
         errorResponse.dateTime = LocalDateTime.now();
         errorResponse.status_code = HttpStatus.BAD_REQUEST.value();
 
