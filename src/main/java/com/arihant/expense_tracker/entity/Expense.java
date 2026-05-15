@@ -15,6 +15,10 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long expId;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
     private String title;
 
     private String category;
@@ -51,6 +55,14 @@ public class Expense {
 
     public void setExpId(Long expId) {
         this.expId = expId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
