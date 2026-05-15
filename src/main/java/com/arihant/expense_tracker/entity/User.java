@@ -9,25 +9,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(unique = true)
-    private String userName;
+    @Column(unique = true, length = 15, nullable = false)
+    private String username;
 
+    @Column(length = 255, nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true,length = 255,nullable = false)
     private String email;
 
-    private String roles;
+    private String role;
 
     public User() {
     }
 
-    public User(Long userId, String userName, String password, String email, String roles) {
+    public User(Long userId, String username, String password, String email, String role) {
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getUserId() {
@@ -38,12 +39,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -62,11 +63,11 @@ public class User {
         this.email = email;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
