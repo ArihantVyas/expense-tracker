@@ -1,6 +1,5 @@
 package com.arihant.expense_tracker.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,11 +7,11 @@ import jakarta.validation.constraints.Size;
 public class UserRegisterDto {
 
     @NotBlank(message = "Username cannot be blank")
-    @Size(max = 15, message = "Maximum size is 15")
+    @Size(min = 3, max = 15, message = "Username size must be in range 3 to 15")
     private String username;
 
     @NotBlank(message = "Password cannot be blank")
-    @Size(min = 8, max = 128, message = "Size must be between 8 and 128")
+    @Size(min = 8, max = 128, message = "Password size must be in range 8 to 128")
     private String password;
 
     @NotBlank(message = "Email cannot be blank")
