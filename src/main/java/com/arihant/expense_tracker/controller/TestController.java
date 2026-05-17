@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/test")
 public class TestController {
 
     @Autowired
     private ServerPortLogger logger;
 
-    @GetMapping("/test")
+    @GetMapping
     public String testMethod(){
         return "App running on port : "+logger.getPort();
     }

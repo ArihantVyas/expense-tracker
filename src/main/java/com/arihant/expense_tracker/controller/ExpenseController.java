@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/expense")
 public class ExpenseController {
 
     @Autowired
     private ExpenseService expenseService;
 
-    @PostMapping("/")
+    @PostMapping("/create-exp")
     public ResponseEntity<Expense> saveNewEntry(@RequestBody @Valid ExpenseRequestDto expenseRequestDto){
         Expense exp = expenseService.saveNewEntry(expenseRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(exp);
     }
 
-    @GetMapping("/")
+    @GetMapping("/get-exp")
     public ResponseEntity<List<ExpenseResponseDto>>  getAll(){
         return new ResponseEntity<>(expenseService.getAll(),HttpStatus.OK);
     }
