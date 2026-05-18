@@ -3,40 +3,72 @@ package com.arihant.expense_tracker.service;
 import com.arihant.expense_tracker.dto.ExpenseRequestDto;
 import com.arihant.expense_tracker.dto.ExpenseResponseDto;
 import com.arihant.expense_tracker.entity.Expense;
+import com.arihant.expense_tracker.entity.User;
 import com.arihant.expense_tracker.repository.ExpenseRepository;
+import com.arihant.expense_tracker.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExpenseService {
 
-    private final ExpenseRepository repo;
+    private final ExpenseRepository expenseRepo;
+    private final UserRepository userRepo;
 
-    public ExpenseService(ExpenseRepository repo) {
-        this.repo = repo;
+    public ExpenseService(ExpenseRepository expenseRepo,UserRepository userRepo) {
+        this.expenseRepo = expenseRepo;
+        this.userRepo = userRepo;
     }
 
-    public Expense saveNewEntry(ExpenseRequestDto requestDto){
+    private User getAuthenticatedUser(){
 
-        Expense expenseReq = new Expense();
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
 
-        expenseReq.setTitle(requestDto.getTitle());
-        expenseReq.setCategory(requestDto.getCategory());
-        expenseReq.setType(requestDto.getType());
-        expenseReq.setAmount(requestDto.getAmount());
-        expenseReq.setExpenseDate(requestDto.getExpenseDate());
-        expenseReq.setRemark(requestDto.getRemark());
+        String username = authentication.getName();
 
-        Expense expenseRes = repo.save(expenseReq);
+        return userRepo.findByUsername(username)
+                .orElseThrow();
 
-        return expenseRes;
+    }
+
+    public ExpenseResponseDto saveNewEntry(ExpenseRequestDto requestDto){
+
+        Expense newExp = new Expense();
+
+        newExp.setTitle(requestDto.getTitle());
+        newExp.setCategory(requestDto.getCategory());
+        newExp.setType(requestDto.getType());
+        newExp.setAmount(requestDto.getAmount());
+        newExp.setExpenseDate(requestDto.getExpenseDate());
+        newExp.setRemark(requestDto.getRemark());
+
+        newExp.setUser(getAuthenticatedUser());
+
+        Expense expenseRes = expenseRepo.save(newExp);
+        ExpenseResponseDto responseDto = new ExpenseResponseDto();
+
+        responseDto.setId(expenseRes.getExpId());
+        responseDto.setTitle(expenseRes.getTitle());
+        responseDto.setCategory(expenseRes.getCategory());
+        responseDto.setType(expenseRes.getType());
+        responseDto.setAmount(expenseRes.getAmount());
+        responseDto.setRemark(expenseRes.getRemark());
+        responseDto.setEntryDateTime(expenseRes.getEntryDateTime());
+        responseDto.setExpenseDate(expenseRes.getExpenseDate());
+
+        return responseDto;
     }
 
     public List<ExpenseResponseDto> getAll(){
 
-        List<Expense> expenseResList = repo.findAll();
+        List<Expense> expenseResList = expenseRepo.findByUser(getAuthenticatedUser());
         List<ExpenseResponseDto> resDtoList = new ArrayList<>();
 
         for(Expense expense : expenseResList){

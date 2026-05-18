@@ -2,7 +2,6 @@ package com.arihant.expense_tracker.controller;
 
 import com.arihant.expense_tracker.dto.ExpenseRequestDto;
 import com.arihant.expense_tracker.dto.ExpenseResponseDto;
-import com.arihant.expense_tracker.entity.Expense;
 import com.arihant.expense_tracker.service.ExpenseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @PostMapping("/create-exp")
-    public ResponseEntity<Expense> saveNewEntry(@RequestBody @Valid ExpenseRequestDto expenseRequestDto){
-        Expense exp = expenseService.saveNewEntry(expenseRequestDto);
+    public ResponseEntity<ExpenseResponseDto> saveNewEntry(@RequestBody @Valid ExpenseRequestDto expenseRequestDto){
+        ExpenseResponseDto exp = expenseService.saveNewEntry(expenseRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(exp);
     }
