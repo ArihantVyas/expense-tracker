@@ -4,6 +4,7 @@ import com.arihant.expense_tracker.dto.ExpenseRequestDto;
 import com.arihant.expense_tracker.dto.ExpenseResponseDto;
 import com.arihant.expense_tracker.entity.Expense;
 import com.arihant.expense_tracker.entity.User;
+import com.arihant.expense_tracker.exception.ResourceNotFoundException;
 import com.arihant.expense_tracker.repository.ExpenseRepository;
 import com.arihant.expense_tracker.repository.UserRepository;
 import org.springframework.security.core.Authentication;
@@ -94,5 +95,16 @@ public class ExpenseService {
 
         return resDtoList;
 
+    }
+
+    public String deleteExpense(Long expId){
+        User user = getAuthenticatedUser();
+
+        Expense exp = expenseRepo.findByExpIdAndUser(expId,user).orElseThrow(() ->
+                new ResourceNotFoundException("Expense not found"));
+
+        expenseRepo.delete(exp);
+
+        return "Expense deleted";
     }
 }

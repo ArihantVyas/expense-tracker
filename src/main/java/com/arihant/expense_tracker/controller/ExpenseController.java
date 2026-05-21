@@ -28,4 +28,9 @@ public class ExpenseController {
     public ResponseEntity<List<ExpenseResponseDto>>  getAll(){
         return new ResponseEntity<>(expenseService.getAll(),HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete-exp")
+    public ResponseEntity<String> deleteExpense(Long expId){
+        return new ResponseEntity<>(expenseService.deleteExpense(expId),HttpStatus.OK);
+    }
 }
